@@ -1,7 +1,8 @@
-# klotski-solver (WIP)
+# klotski-solver
 
 ## Installation
 
+    $ gem install bundler
     $ bundle install
     $ rake install
 

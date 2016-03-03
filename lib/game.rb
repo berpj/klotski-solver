@@ -9,10 +9,14 @@ class Game
     puts "\n\nWIN!\n\n"
 
     new_node.parentage.reverse.each do |node|
+
+      system("clear")
       Board.new(node.name).display
-      #puts "Press SPACE...\n\n"
-      #self.wait_for_spacebar
+      #sleep(0.2)
+      puts "Press SPACE..."
+      self.wait_for_spacebar
     end
+    system("clear")
     Board.new(new_board).display
 
     puts "Score: #{new_node.parentage.count}"

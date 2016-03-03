@@ -1,5 +1,7 @@
 # klotski-solver
 
+About Klotski: https://en.wikipedia.org/wiki/Klotski
+
 ## Installation
 
     $ gem install bundler

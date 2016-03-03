@@ -264,19 +264,18 @@ class Board
   def get_new_boards(game)
     new_boards = []
 
-    board = Board.new(@value)
-    old_l_position = board.get_l_position()
+    old_l_position = get_l_position()
 
     for y in 0..4
       for x in 0..3
         #if top left part of the piece
-        if board.value[y * BOARD_WIDTH + x] != '.' && ((x == 0 || (board.value[y * BOARD_WIDTH + x] != board.value[y * BOARD_WIDTH + x - 1])) && (y == 0 || (board.value[y * BOARD_WIDTH + x] != board.value[(y - 1) * BOARD_WIDTH + x])))
+        if @value[y * BOARD_WIDTH + x] != '.' && ((x == 0 || (@value[y * BOARD_WIDTH + x] != @value[y * BOARD_WIDTH + x - 1])) && (y == 0 || (@value[y * BOARD_WIDTH + x] != @value[(y - 1) * BOARD_WIDTH + x])))
           tmp_boards = []
 
-          tmp_boards << Board.new(board.move_up(y, x)) unless (y == 0) || (y > 0 && board.value[(y - 1) * BOARD_WIDTH + x] != '.')
-          tmp_boards << Board.new(board.move_bottom(y, x)) unless (y == 4) || (y == 3 && board.value[(y + 1) * BOARD_WIDTH + x] != '.') || (y == 2 && board.value[(y + 1) * BOARD_WIDTH + x] != '.' && board.value[(y + 2) * BOARD_WIDTH + x] != '.')
-          tmp_boards << Board.new(board.move_left(y, x)) unless (x == 0) || (x > 0 && board.value[y * BOARD_WIDTH + x - 1] != '.')
-          tmp_boards << Board.new(board.move_right(y, x)) unless (x == 3) || (x == 2 && board.value[y * BOARD_WIDTH + x + 1] != '.') || (x == 1 && board.value[y * BOARD_WIDTH + x + 1] != '.' && board.value[y * BOARD_WIDTH + x + 2] != '.')
+          tmp_boards << Board.new(move_up(y, x)) unless (y == 0) || (y > 0 && @value[(y - 1) * BOARD_WIDTH + x] != '.')
+          tmp_boards << Board.new(move_bottom(y, x)) unless (y == 4) || (y == 3 && @value[(y + 1) * BOARD_WIDTH + x] != '.') || (y == 2 && @value[(y + 1) * BOARD_WIDTH + x] != '.' && @value[(y + 2) * BOARD_WIDTH + x] != '.')
+          tmp_boards << Board.new(move_left(y, x)) unless (x == 0) || (x > 0 && @value[y * BOARD_WIDTH + x - 1] != '.')
+          tmp_boards << Board.new(move_right(y, x)) unless (x == 3) || (x == 2 && @value[y * BOARD_WIDTH + x + 1] != '.') || (x == 1 && @value[y * BOARD_WIDTH + x + 1] != '.' && @value[y * BOARD_WIDTH + x + 2] != '.')
 
           tmp_boards.each do |tmp_board|
             l_position = tmp_board.get_l_position()

@@ -11,3 +11,7 @@ About Klotski: https://en.wikipedia.org/wiki/Klotski
 ## Usage
 
     $ bin/klotski board1.txt
+
+## Demo
+
+<img src="demo.gif" width="75%">

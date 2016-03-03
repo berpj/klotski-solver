@@ -167,15 +167,7 @@ class Board
     return new_board
   end
 
-  def move_up(y, x)
-    return move_vertically(y, x, -1)
-  end
-
-  def move_bottom(y, x)
-    return move_vertically(y, x, 1)
-  end
-
-  def move_left(y, x)
+  def move_horizontally(y, x, direction)
     new_board = @value.clone
     piece = new_board[y * BOARD_WIDTH + x]
 
@@ -183,86 +175,39 @@ class Board
     x2 = x
 
     if piece == 'C' || piece == 'D' || piece == 'E' || piece == 'F'
-      while x2 > 0 && new_board[y2 * BOARD_WIDTH + x2 - 1] == '.'
-        new_board[y2 * BOARD_WIDTH + x2 - 1] = piece
+      while new_board[y2 * BOARD_WIDTH + x2 + direction] == '.'
+        new_board[y2 * BOARD_WIDTH + x2 + direction] = piece
         new_board[y2 * BOARD_WIDTH + x2] = '.'
 
-        x2 -= 1
+        x2 += direction
       end
 
     elsif piece == 'G' || piece == 'H' || piece == 'I' || piece == 'K'
-      while x2 > 0 && new_board[y2 * BOARD_WIDTH + x2 - 1] == '.' && new_board[(y2 + 1) * BOARD_WIDTH + x2 - 1] == '.'
-        new_board[y2 * BOARD_WIDTH + x2 - 1] = piece
-        new_board[(y2 + 1) * BOARD_WIDTH + x2 - 1] = piece
+      while new_board[y2 * BOARD_WIDTH + x2 + direction] == '.' && new_board[(y2 + 1) * BOARD_WIDTH + x2 + direction] == '.'
+        new_board[y2 * BOARD_WIDTH + x2 + direction] = piece
+        new_board[(y2 + 1) * BOARD_WIDTH + x2 + direction] = piece
         new_board[y2 * BOARD_WIDTH + x2] = '.'
         new_board[(y2 + 1) * BOARD_WIDTH + x2] = '.'
 
-        x2 -= 1
+        x2 += direction
       end
 
     elsif piece == 'J'
-      while x2 > 0 && new_board[y2 * BOARD_WIDTH + x2 - 1] == '.'
-        new_board[y2 * BOARD_WIDTH + x2 - 1] = piece
-        new_board[y2 * BOARD_WIDTH + x2 + 1] = '.'
+      while x2 > 0 && new_board[y2 * BOARD_WIDTH + x2 + (direction == -1 ? -1 : 2)] == '.'
+        new_board[y2 * BOARD_WIDTH + x2 + (direction == -1 ? -1 : 2)] = piece
+        new_board[y2 * BOARD_WIDTH + x2 + (direction == -1 ? 1 : 0)] = '.'
 
-        x2 -= 1
+        x2 += direction
       end
 
     elsif piece == 'L'
-      while x2 > 0 && new_board[y2 * BOARD_WIDTH + x2 - 1] == '.' && new_board[(y2 + 1) * BOARD_WIDTH + x2 - 1] == '.'
-        new_board[y2 * BOARD_WIDTH + x2 - 1] = piece
-        new_board[(y2 + 1) * BOARD_WIDTH + x2 - 1] = piece
-        new_board[y2 * BOARD_WIDTH + x2 + 1] = '.'
-        new_board[(y2 + 1) * BOARD_WIDTH + x2 + 1] = '.'
+      while new_board[y2 * BOARD_WIDTH + x2 + (direction == -1 ? -1 : 2)] == '.' && new_board[(y2 + 1) * BOARD_WIDTH + x2 + (direction == -1 ? -1 : 2)] == '.'
+        new_board[y2 * BOARD_WIDTH + x2 + (direction == -1 ? -1 : 2)] = piece
+        new_board[(y2 + 1) * BOARD_WIDTH + x2 + (direction == -1 ? -1 : 2)] = piece
+        new_board[y2 * BOARD_WIDTH + x2 + (direction == -1 ? 1 : 0)] = '.'
+        new_board[(y2 + 1) * BOARD_WIDTH + x2 + (direction == -1 ? 1 : 0)] = '.'
 
-        x2 -= 1
-      end
-    end
-
-    return new_board
-  end
-
-  def move_right(y, x)
-    new_board = @value.clone
-    piece = new_board[y * BOARD_WIDTH + x]
-
-    y2 = y
-    x2 = x
-
-    if piece == 'C' || piece == 'D' || piece == 'E' || piece == 'F'
-      while x2 < 3 && new_board[y2 * BOARD_WIDTH + x2 + 1] == '.'
-        new_board[y2 * BOARD_WIDTH + x2 + 1] = piece
-        new_board[y2 * BOARD_WIDTH + x2] = '.'
-
-        x2 += 1
-      end
-
-    elsif piece == 'G' || piece == 'H' || piece == 'I' || piece == 'K'
-      while x2 < 3 && new_board[y2 * BOARD_WIDTH + x2 + 1] == '.' && new_board[(y2 + 1) * BOARD_WIDTH + x2 + 1] == '.'
-        new_board[y2 * BOARD_WIDTH + x2 + 1] = piece
-        new_board[(y2 + 1) * BOARD_WIDTH + x2 + 1] = piece
-        new_board[y2 * BOARD_WIDTH + x2] = '.'
-        new_board[(y2 + 1) * BOARD_WIDTH + x2] = '.'
-
-        x2 += 1
-      end
-
-    elsif piece == 'J'
-      while x2 < 2 && new_board[y2 * BOARD_WIDTH + x2 + 2] == '.'
-        new_board[y2 * BOARD_WIDTH + x2 + 2] = piece
-        new_board[y2 * BOARD_WIDTH + x2] = '.'
-
-        x2 += 1
-      end
-
-    elsif piece == 'L'
-      while x2 < 2 && new_board[y2 * BOARD_WIDTH + x2 + 2] == '.' && new_board[(y2 + 1) * BOARD_WIDTH + x2 + 2] == '.'
-        new_board[y2 * BOARD_WIDTH + x2 + 2] = piece
-        new_board[(y2 + 1) * BOARD_WIDTH + x2 + 2] = piece
-        new_board[y2 * BOARD_WIDTH + x2] = '.'
-        new_board[(y2 + 1) * BOARD_WIDTH + x2] = '.'
-
-        x2 += 1
+        x2 += direction
       end
     end
 
@@ -280,10 +225,10 @@ class Board
         if @value[y * BOARD_WIDTH + x] != '.' && ((x == 0 || (@value[y * BOARD_WIDTH + x] != @value[y * BOARD_WIDTH + x - 1])) && (y == 0 || (@value[y * BOARD_WIDTH + x] != @value[(y - 1) * BOARD_WIDTH + x])))
           tmp_boards = []
 
-          tmp_boards << Board.new(move_up(y, x)) unless (y == 0) || (y > 0 && @value[(y - 1) * BOARD_WIDTH + x] != '.')
-          tmp_boards << Board.new(move_bottom(y, x)) unless (y == 4) || (y == 3 && @value[(y + 1) * BOARD_WIDTH + x] != '.') || (y == 2 && @value[(y + 1) * BOARD_WIDTH + x] != '.' && @value[(y + 2) * BOARD_WIDTH + x] != '.')
-          tmp_boards << Board.new(move_left(y, x)) unless (x == 0) || (x > 0 && @value[y * BOARD_WIDTH + x - 1] != '.')
-          tmp_boards << Board.new(move_right(y, x)) unless (x == 3) || (x == 2 && @value[y * BOARD_WIDTH + x + 1] != '.') || (x == 1 && @value[y * BOARD_WIDTH + x + 1] != '.' && @value[y * BOARD_WIDTH + x + 2] != '.')
+          tmp_boards << Board.new(move_vertically(y, x, -1)) unless (y == 0) || (y > 0 && @value[(y - 1) * BOARD_WIDTH + x] != '.')
+          tmp_boards << Board.new(move_vertically(y, x, 1)) unless (y == 4) || (y == 3 && @value[(y + 1) * BOARD_WIDTH + x] != '.') || (y == 2 && @value[(y + 1) * BOARD_WIDTH + x] != '.' && @value[(y + 2) * BOARD_WIDTH + x] != '.')
+          tmp_boards << Board.new(move_horizontally(y, x, -1)) unless (x == 0) || (x > 0 && @value[y * BOARD_WIDTH + x - 1] != '.')
+          tmp_boards << Board.new(move_horizontally(y, x, 1)) unless (x == 3) || (x == 2 && @value[y * BOARD_WIDTH + x + 1] != '.') || (x == 1 && @value[y * BOARD_WIDTH + x + 1] != '.' && @value[y * BOARD_WIDTH + x + 2] != '.')
 
           tmp_boards.each do |tmp_board|
             l_position = tmp_board.get_l_position()

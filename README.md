@@ -4,3 +4,7 @@
 
     $ bundle install
     $ rake install
+
+## Usage
+
+    $ bin/klotski board1.txt

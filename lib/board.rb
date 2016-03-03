@@ -73,7 +73,7 @@ class Board
     return -1
   end
 
-  def move_up(y, x)
+  def move_vertically(y, x, direction)
     new_board = @value.clone
     piece = new_board[y * BOARD_WIDTH + x]
 
@@ -120,7 +120,7 @@ class Board
     return new_board
   end
 
-  def move_bottom(y, x)
+  def move_vertically(y, x, direction)
     new_board = @value.clone
     piece = new_board[y * BOARD_WIDTH + x]
 
@@ -128,43 +128,51 @@ class Board
     x2 = x
 
     if piece == 'C' || piece == 'D' || piece == 'E' || piece == 'F'
-      while y2 < 4 && new_board[(y2 + 1) * BOARD_WIDTH + x2] == '.'
-        new_board[(y2 + 1) * BOARD_WIDTH + x2] = piece
-        new_board[y2 * BOARD_WIDTH + x2] = '.'
+        while new_board[(y2 + direction) * BOARD_WIDTH + x2] == '.'
+          new_board[(y2 + direction) * BOARD_WIDTH + x2] = piece
+          new_board[y2 * BOARD_WIDTH + x2] = '.'
 
-        y2 += 1
-      end
+          y2 += direction
+        end
 
     elsif piece == 'G' || piece == 'H' || piece == 'I' || piece == 'K'
-      while y2 < 3 && new_board[(y2 + 2) * BOARD_WIDTH + x2] == '.'
-        new_board[(y2 + 2) * BOARD_WIDTH + x2] = piece
-        new_board[y2 * BOARD_WIDTH + x2] = '.'
+      while new_board[(y2 + (direction == -1 ? -1 : 2)) * BOARD_WIDTH + x2] == '.'
+        new_board[(y2 + (direction == -1 ? -1 : 2)) * BOARD_WIDTH + x2] = piece
+        new_board[(y2 + (direction == -1 ? 1 : 0)) * BOARD_WIDTH + x2] = '.'
 
-        y2 += 1
+        y2 += direction
       end
 
     elsif piece == 'J'
-      while y2 < 4 && new_board[(y2 + 1) * BOARD_WIDTH + x2] == '.' && new_board[(y2 + 1) * BOARD_WIDTH + x2 + 1] == '.'
-        new_board[(y2 + 1) * BOARD_WIDTH + x2] = piece
-        new_board[(y2 + 1) * BOARD_WIDTH + x2 + 1] = piece
+      while new_board[(y2 + direction) * BOARD_WIDTH + x2] == '.' && new_board[(y2 + direction) * BOARD_WIDTH + x2 + 1] == '.'
+        new_board[(y2 + direction) * BOARD_WIDTH + x2] = piece
+        new_board[(y2 + direction) * BOARD_WIDTH + x2 + 1] = piece
         new_board[y2 * BOARD_WIDTH + x2] = '.'
         new_board[y2 * BOARD_WIDTH + x2 + 1] = '.'
 
-        y2 += 1
+        y2 += direction
       end
 
     elsif piece == 'L'
-      while y2 < 3 && new_board[(y2 + 2) * BOARD_WIDTH + x2] == '.' && new_board[(y2 + 2) * BOARD_WIDTH + x2 + 1] == '.'
-        new_board[(y2 + 2) * BOARD_WIDTH + x2] = piece
-        new_board[(y2 + 2) * BOARD_WIDTH + x2 + 1] = piece
-        new_board[y2 * BOARD_WIDTH + x2] = '.'
-        new_board[y2 * BOARD_WIDTH + x2 + 1] = '.'
+      while new_board[(y2 + (direction == -1 ? -1 : 2)) * BOARD_WIDTH + x2] == '.' && new_board[(y2 + (direction == -1 ? -1 : 2)) * BOARD_WIDTH + x2 + 1] == '.'
+        new_board[(y2 + (direction == -1 ? -1 : 2)) * BOARD_WIDTH + x2] = piece
+        new_board[(y2 + (direction == -1 ? -1 : 2)) * BOARD_WIDTH + x2 + 1] = piece
+        new_board[(y2 + (direction == -1 ? 1 : 0)) * BOARD_WIDTH + x2] = '.'
+        new_board[(y2 + (direction == -1 ? 1 : 0)) * BOARD_WIDTH + x2 + 1] = '.'
 
-        y2 += 1
+        y2 += direction
       end
     end
 
     return new_board
+  end
+
+  def move_up(y, x)
+    return move_vertically(y, x, -1)
+  end
+
+  def move_bottom(y, x)
+    return move_vertically(y, x, 1)
   end
 
   def move_left(y, x)

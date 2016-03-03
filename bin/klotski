@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require 'klotski'
+
+@usage = "Usage: klotski positions"
+
+if ARGV.empty?
+  puts @usage
+  exit 1
+end
+
+Klotski.solve(ARGV[0])

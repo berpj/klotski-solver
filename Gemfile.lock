@@ -1,0 +1,26 @@
+PATH
+  remote: .
+  specs:
+    klotski (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    json (1.8.3)
+    rake (10.4.2)
+    rubytree (0.9.6)
+      json (~> 1.8)
+      structured_warnings (~> 0.2)
+    structured_warnings (0.2.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.11)
+  klotski!
+  rake (~> 10.0)
+  rubytree (~> 0.9.6)
+
+BUNDLED WITH
+   1.11.2

@@ -14,4 +14,4 @@ About Klotski: https://en.wikipedia.org/wiki/Klotski
 
 ## Demo
 
-<img src="demo.gif" width="75%">
+<img src="demo.gif" width="600px">

@@ -20,8 +20,6 @@ class Board
     @value = ''
 
     IO.foreach(file_name) { |line| @value << line.strip }
-
-    return @value
   end
 
   def get_hash()
@@ -128,12 +126,12 @@ class Board
     x2 = x
 
     if piece == 'C' || piece == 'D' || piece == 'E' || piece == 'F'
-        while new_board[(y2 + direction) * BOARD_WIDTH + x2] == '.'
-          new_board[(y2 + direction) * BOARD_WIDTH + x2] = piece
-          new_board[y2 * BOARD_WIDTH + x2] = '.'
+      while new_board[(y2 + direction) * BOARD_WIDTH + x2] == '.'
+        new_board[(y2 + direction) * BOARD_WIDTH + x2] = piece
+        new_board[y2 * BOARD_WIDTH + x2] = '.'
 
-          y2 += direction
-        end
+        y2 += direction
+      end
 
     elsif piece == 'G' || piece == 'H' || piece == 'I' || piece == 'K'
       while new_board[(y2 + (direction == -1 ? -1 : 2)) * BOARD_WIDTH + x2] == '.'

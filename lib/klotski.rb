@@ -8,11 +8,10 @@ BOARD_WIDTH = 4
 
 module Klotski
   def self.solve(file_name)
+    game = Game.new()
     board = Board.new()
     board.load_from_file(file_name)
-    root_node = Tree::TreeNode.new(board.value, board)
-    queue = [root_node]
-    game = Game.new()
+    queue = [Tree::TreeNode.new(board.value, board)]
 
     while queue.any?
       current_node = queue.shift

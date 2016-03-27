@@ -1,4 +1,4 @@
-# klotski-solver
+# Walton
 
 About Klotski: https://en.wikipedia.org/wiki/Klotski
 
